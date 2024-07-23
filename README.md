@@ -1,5 +1,5 @@
 <h1 align="center">
-  Fedorable - a post install helper script for the GNOME desktop environment. (For my personal use)
+  Fedorable - a post install helper script for the GNOME desktop environment. (For my personal use, NOT TESTED)
 </h1>
 <p align="center">
   <img width="300" height="300" src="logo.png">
