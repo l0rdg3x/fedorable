@@ -8,14 +8,5 @@ unrar
 nmap
 gimp
 libreoffice
-inkscape
-obs-studio
 qbittorrent
-kitty
-solaar
-imhex
-gpredict
-kdenlive
-eza
-java-latest-openjdk
-java-latest-openjdk-devel
+btrfs-assistant
