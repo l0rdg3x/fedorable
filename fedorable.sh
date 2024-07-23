@@ -78,6 +78,7 @@ update_firmware() {
 speed_up_dnf() {
     echo "Speeding Up DNF"
     echo 'max_parallel_downloads=10' | sudo tee -a /etc/dnf/dnf.conf
+    echo 'fastestmirror=True' | sudo tee -a /etc/dnf/dnf.conf
     notify "Your DNF config has now been amended"
 }
 
