@@ -129,10 +129,7 @@ install_extras() {
     sudo dnf group upgrade -y --with-optional Multimedia
     sudo dnf config-manager --set-enabled fedora-cisco-openh264
     sudo dnf install -y gstreamer1-plugin-openh264 mozilla-openh264
-#    sudo dnf copr enable peterwu/iosevka -y
     sudo dnf update -y
-#    sudo dnf install -y iosevka-term-fonts jetbrains-mono-fonts-all terminus-fonts terminus-fonts-console google-noto-fonts-common fira-code-fonts cabextract xorg-x11-font-utils fontconfig
-#    sudo rpm -i https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm
     notify "All done"
 }
 
@@ -147,6 +144,9 @@ enable_virt() {
     sudo dnf install -y @virtualization
     sudo systemctl enable --now libvirtd
     sudo usermod -aG libvirt $(whoami)
+    sudo sed -i 's/#unix_sock_group = "libvirt"/unix_sock_group = "libvirt"/' /etc/libvirt/libvirtd.conf
+    sudo sed -i 's/#unix_sock_ro_perms = "0777"/unix_sock_ro_perms = "0777"/' /etc/libvirt/libvirtd.conf
+    sudo sed -i 's/#unix_sock_rw_perms = "0770"/unix_sock_rw_perms = "0770"/' /etc/libvirt/libvirtd.conf
 }
 
 # Main loop
