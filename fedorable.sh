@@ -33,7 +33,7 @@ fi
 OPTIONS=(
     1 "Enable RPM Fusion - Enables the RPM Fusion repos for your specific version"
     2 "Update Firmware - If your system supports FW update delivery"
-    3 "Speed up DNF - Sets max parallel downloads to 10"
+    3 "Speed up DNF - Sets max parallel downloads to 10 + Fastest server"
     4 "Enable Flatpak - Enables the Flatpak repo and installs packages located in flatpak-packages.txt"
     5 "Install Software - Installs software located in dnf-packages.txt"
     6 "Install Oh-My-ZSH - Installs Oh-My-ZSH & Starship Prompt"
