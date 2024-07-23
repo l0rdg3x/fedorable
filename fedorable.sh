@@ -129,10 +129,10 @@ install_extras() {
     sudo dnf group upgrade -y --with-optional Multimedia
     sudo dnf config-manager --set-enabled fedora-cisco-openh264
     sudo dnf install -y gstreamer1-plugin-openh264 mozilla-openh264
-    sudo dnf copr enable peterwu/iosevka -y
+#    sudo dnf copr enable peterwu/iosevka -y
     sudo dnf update -y
-    sudo dnf install -y iosevka-term-fonts jetbrains-mono-fonts-all terminus-fonts terminus-fonts-console google-noto-fonts-common fira-code-fonts cabextract xorg-x11-font-utils fontconfig
-    sudo rpm -i https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm
+#    sudo dnf install -y iosevka-term-fonts jetbrains-mono-fonts-all terminus-fonts terminus-fonts-console google-noto-fonts-common fira-code-fonts cabextract xorg-x11-font-utils fontconfig
+#    sudo rpm -i https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm
     notify "All done"
 }
 
