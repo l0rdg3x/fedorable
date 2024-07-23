@@ -39,7 +39,8 @@ OPTIONS=(
     6 "Install Oh-My-ZSH - Installs Oh-My-ZSH & Starship Prompt"
     7 "Install Extras - Themes, Fonts, and Codecs"
     8 "Install Nvidia - Install akmod Nvidia drivers"
-    9 "Quit"
+    9 "Enable Virtualization - KVM/QEMU  + VirtManager"
+    10 "Quit"
 )
 
 # Function to display notifications
@@ -142,6 +143,12 @@ install_nvidia() {
     notify "Please wait 5 minutes until rebooting"
 }
 
+enable_virt() {
+    sudo dnf install -y @virtualization
+    sudo systemctl enable --now libvirtd
+    sudo usermod -aG libvirt $(whoami)
+}
+
 # Main loop
 while true; do
     CHOICE=$(dialog --clear \
@@ -163,7 +170,8 @@ while true; do
         6) install_oh_my_zsh ;;
         7) install_extras ;;
         8) install_nvidia ;;
-        9) log_action "User chose to quit the script."; exit 0 ;;
+        9) enable_virt ;;
+        10) log_action "User chose to quit the script."; exit 0 ;;
         *) log_action "Invalid option selected: $CHOICE";;
     esac
 done
