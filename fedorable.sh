@@ -6,7 +6,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
 # Dialog dimensions
 HEIGHT=20
 WIDTH=90
-CHOICE_HEIGHT=10
+CHOICE_HEIGHT=12
 
 # Titles and messages
 BACKTITLE="Fedorable - A Fedora Post Install Setup Util for GNOME - By Smittix - https://lsass.co.uk"
@@ -40,7 +40,9 @@ OPTIONS=(
     7 "Install Extras - Themes, Fonts, and Codecs"
     8 "Install Nvidia - Install akmod Nvidia drivers"
     9 "Enable Virtualization - KVM/QEMU  + VirtManager"
-    10 "Quit"
+    10 "Enable TLP"
+    11 "Install OpenRazer + Polychromatic"
+    12 "Quit"
 )
 
 # Function to display notifications
@@ -149,6 +151,18 @@ enable_virt() {
     sudo sed -i 's/#unix_sock_rw_perms = "0770"/unix_sock_rw_perms = "0770"/' /etc/libvirt/libvirtd.conf
 }
 
+enable_tlp() {
+    sudo systemctl enable tlp.service
+    sudo systemctl start tlp.service
+}
+
+install_openrazer() {
+    sudo dnf install -y kernel-devel
+    sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/hardware:/razer/Fedora_$(rpm -E %fedora)/hardware:razer.repo
+    sudo dnf install -y openrazer-meta
+    sudo dnf install -y polychromatic
+}
+
 # Main loop
 while true; do
     CHOICE=$(dialog --clear \
@@ -171,7 +185,9 @@ while true; do
         7) install_extras ;;
         8) install_nvidia ;;
         9) enable_virt ;;
-        10) log_action "User chose to quit the script."; exit 0 ;;
+        10 enable_tlp ;;
+        11 install_openrazer ;;
+        12) log_action "User chose to quit the script."; exit 0 ;;
         *) log_action "Invalid option selected: $CHOICE";;
     esac
 done
