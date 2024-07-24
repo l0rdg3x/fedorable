@@ -185,8 +185,8 @@ while true; do
         7) install_extras ;;
         8) install_nvidia ;;
         9) enable_virt ;;
-        10 enable_tlp ;;
-        11 install_openrazer ;;
+        10) enable_tlp ;;
+        11) install_openrazer ;;
         12) log_action "User chose to quit the script."; exit 0 ;;
         *) log_action "Invalid option selected: $CHOICE";;
     esac
