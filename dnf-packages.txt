@@ -1,6 +1,4 @@
-btop
-gnome-extensions-app
-gnome-tweaks
+htop
 p7zip
 p7zip-plugins
 unzip
