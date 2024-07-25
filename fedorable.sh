@@ -153,6 +153,14 @@ install_vscode() {
     sudo dnf install -y code
 }
 
+install anydesk() {
+    sudo rpm --import https://keys.anydesk.com/repos/RPM-GPG-KEY
+    echo -e "[anydesk]\nname=AnyDesk Fedora - stable\nbaseurl=http://rpm.anydesk.com/fedora/$basearch/\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://keys.anydesk.com/repos/RPM-GPG-KEY" | sudo tee /etc/yum.repos.d/AnyDesk-Fedora.repo > /dev/null
+    sudo dnf install -y https://rpmfind.net/linux/opensuse/tumbleweed/repo/oss/x86_64/libgtkglext-x11-1_0-0-1.2.0git20110529-8.6.x86_64.rpm
+    dnf check-update
+    sudo dnf install -y anydesk
+}
+
 # Main loop
 while true; do
     CHOICE=$(dialog --clear \
