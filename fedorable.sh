@@ -6,7 +6,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
 # Dialog dimensions
 HEIGHT=20
 WIDTH=90
-CHOICE_HEIGHT=12
+CHOICE_HEIGHT=13
 
 # Titles and messages
 BACKTITLE="Fedorable - A Fedora Post Install Setup Util for GNOME - By Smittix - https://lsass.co.uk"
@@ -42,7 +42,8 @@ OPTIONS=(
     9 "Enable Virtualization - KVM/QEMU  + VirtManager"
     10 "Enable TLP"
     11 "Install OpenRazer + Polychromatic"
-    12 "Quit"
+    12 "Install VSCode"
+    13 "Quit"
 )
 
 # Function to handle RPM Fusion setup
@@ -145,6 +146,13 @@ install_openrazer() {
     sudo dnf install -y polychromatic
 }
 
+install_vscode() {
+    sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+    echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo > /dev/null
+    dnf check-update
+    sudo dnf install code
+}
+
 # Main loop
 while true; do
     CHOICE=$(dialog --clear \
@@ -169,7 +177,8 @@ while true; do
         9) enable_virt ;;
         10) enable_tlp ;;
         11) install_openrazer ;;
-        12) log_action "User chose to quit the script."; exit 0 ;;
+        12) install_vscode ;;
+        13) log_action "User chose to quit the script."; exit 0 ;;
         *) log_action "Invalid option selected: $CHOICE";;
     esac
 done
