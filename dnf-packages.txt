@@ -16,3 +16,4 @@ vlc
 remmina
 picard
 discord
+dnf-plugin-system-upgrade
