@@ -1,2 +1,4 @@
 com.bitwarden.desktop
 com.spotify.Client
+com.github.k4zmu2a.spacecadetpinball
+com.rafaelmardojai.Blanket
