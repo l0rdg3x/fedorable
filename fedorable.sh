@@ -45,16 +45,6 @@ OPTIONS=(
     12 "Quit"
 )
 
-# Function to display notifications
-notify() {
-    local message=$1
-    local expire_time=${2:-10}
-    if command -v notify-send &>/dev/null; then
-        notify-send "$message" --expire-time="$expire_time"
-    fi
-    log_action "$message"
-}
-
 # Function to handle RPM Fusion setup
 enable_rpm_fusion() {
     echo "Enabling RPM Fusion"
@@ -64,7 +54,6 @@ enable_rpm_fusion() {
     sudo dnf upgrade --refresh -y
     sudo dnf groupupdate -y core
     sudo dnf install -y rpmfusion-free-release-tainted dnf-plugins-core
-    notify "RPM Fusion Enabled"
 }
 
 # Function to update firmware
@@ -74,7 +63,6 @@ update_firmware() {
     sudo fwupdmgr refresh --force
     sudo fwupdmgr get-updates
     sudo fwupdmgr update
-    notify "System Firmware Updated"
 }
 
 # Function to speed up DNF
@@ -82,7 +70,6 @@ speed_up_dnf() {
     echo "Speeding Up DNF"
     echo 'max_parallel_downloads=10' | sudo tee -a /etc/dnf/dnf.conf
     echo 'fastestmirror=True' | sudo tee -a /etc/dnf/dnf.conf
-    notify "Your DNF config has now been amended"
 }
 
 # Function to enable Flatpak
@@ -95,7 +82,6 @@ enable_flatpak() {
     else
         log_action "flatpak-install.sh not found"
     fi
-    notify "Flatpak has now been enabled"
 }
 
 # Function to install software
@@ -103,7 +89,6 @@ install_software() {
     echo "Installing Software"
     if [ -f dnf-packages.txt ]; then
         sudo dnf install -y $(cat dnf-packages.txt)
-        notify "Software has been installed"
     else
         log_action "dnf-packages.txt not found"
     fi
@@ -117,7 +102,6 @@ install_oh_my_zsh() {
     chsh -s "$(which zsh)"
     curl -sS https://starship.rs/install.sh | sh
     echo 'eval "$(starship init zsh)"' >> ~/.zshrc
-    notify "Oh-My-Zsh is ready to rock n roll"
 }
 
 # Function to install extras
@@ -132,14 +116,12 @@ install_extras() {
     sudo dnf config-manager --set-enabled fedora-cisco-openh264
     sudo dnf install -y gstreamer1-plugin-openh264 mozilla-openh264
     sudo dnf update -y
-    notify "All done"
 }
 
 # Function to install Nvidia drivers
 install_nvidia() {
     echo "Installing Nvidia Driver Akmod-Nvidia"
     sudo dnf install -y akmod-nvidia
-    notify "Please wait 5 minutes until rebooting"
 }
 
 enable_virt() {
