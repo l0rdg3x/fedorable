@@ -6,7 +6,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
 # Dialog dimensions
 HEIGHT=20
 WIDTH=90
-CHOICE_HEIGHT=13
+CHOICE_HEIGHT=14
 
 # Titles and messages
 BACKTITLE="Fedorable - A Fedora Post Install Setup Util for GNOME - By Smittix - https://lsass.co.uk"
@@ -43,7 +43,8 @@ OPTIONS=(
     10 "Enable TLP"
     11 "Install OpenRazer + Polychromatic"
     12 "Install VSCode"
-    13 "Quit"
+    13 "Install AnyDesk"
+    14 "Quit"
 )
 
 # Function to handle RPM Fusion setup
@@ -153,7 +154,7 @@ install_vscode() {
     sudo dnf install -y code
 }
 
-install anydesk() {
+install_anydesk() {
     sudo rpm --import https://keys.anydesk.com/repos/RPM-GPG-KEY
     echo -e "[anydesk]\nname=AnyDesk Fedora - stable\nbaseurl=http://rpm.anydesk.com/fedora/$basearch/\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://keys.anydesk.com/repos/RPM-GPG-KEY" | sudo tee /etc/yum.repos.d/AnyDesk-Fedora.repo > /dev/null
     sudo dnf install -y https://rpmfind.net/linux/opensuse/tumbleweed/repo/oss/x86_64/libgtkglext-x11-1_0-0-1.2.0git20110529-8.6.x86_64.rpm
@@ -186,7 +187,8 @@ while true; do
         10) enable_tlp ;;
         11) install_openrazer ;;
         12) install_vscode ;;
-        13) log_action "User chose to quit the script."; exit 0 ;;
+        13) install_anydesk ;;
+        14) log_action "User chose to quit the script."; exit 0 ;;
         *) log_action "Invalid option selected: $CHOICE";;
     esac
 done
