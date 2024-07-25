@@ -8,3 +8,4 @@ gimp
 libreoffice
 qbittorrent
 btrfs-assistant
+steam
