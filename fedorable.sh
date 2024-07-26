@@ -9,7 +9,7 @@ WIDTH=90
 CHOICE_HEIGHT=14
 
 # Titles and messages
-BACKTITLE="Fedorable - A Fedora Post Install Setup Util for GNOME - By Smittix - https://lsass.co.uk"
+BACKTITLE="Fedorable - A Fedora Post Install Setup Util - By Smittix - https://lsass.co.uk"
 TITLE="Please Make a Selection"
 MENU="Please Choose one of the following options:"
 
@@ -41,7 +41,7 @@ OPTIONS=(
     8 "Install Nvidia - Install akmod Nvidia drivers"
     9 "Enable Virtualization - KVM/QEMU  + VirtManager"
     10 "Enable TLP"
-    11 "Install OpenRazer + Polychromatic"
+    11 "Install OpenRazer + Polychromatic (sudo gpasswd -a <yourUsername> plugdev)"
     12 "Install VSCode"
     13 "Install AnyDesk"
     14 "Quit"
@@ -150,7 +150,6 @@ install_openrazer() {
 install_vscode() {
     sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
     echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo > /dev/null
-    dnf check-update
     sudo dnf install -y code
 }
 
@@ -158,7 +157,6 @@ install_anydesk() {
     sudo rpm --import https://keys.anydesk.com/repos/RPM-GPG-KEY
     echo -e "[anydesk]\nname=AnyDesk Fedora - stable\nbaseurl=http://rpm.anydesk.com/fedora/\$basearch/\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://keys.anydesk.com/repos/RPM-GPG-KEY" | sudo tee /etc/yum.repos.d/AnyDesk-Fedora.repo > /dev/null
     sudo dnf install -y https://rpmfind.net/linux/opensuse/tumbleweed/repo/oss/x86_64/libgtkglext-x11-1_0-0-1.2.0git20110529-8.6.x86_64.rpm
-    dnf check-update
     sudo dnf install -y anydesk
 }
 
