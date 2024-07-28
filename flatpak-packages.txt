@@ -3,3 +3,4 @@ com.spotify.Client
 com.github.k4zmu2a.spacecadetpinball
 com.rafaelmardojai.Blanket
 net.davidotek.pupgui2
+com.usebottles.bottles
