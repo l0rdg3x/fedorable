@@ -18,3 +18,4 @@ picard
 discord
 dnf-plugin-system-upgrade
 syncthing
+fastfetch
