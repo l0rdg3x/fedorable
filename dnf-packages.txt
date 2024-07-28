@@ -21,3 +21,4 @@ syncthing
 fastfetch
 rawtherapee
 rpi-imager
+wireshark
