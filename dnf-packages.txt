@@ -20,3 +20,4 @@ dnf-plugin-system-upgrade
 syncthing
 fastfetch
 rawtherapee
+rpi-imager
