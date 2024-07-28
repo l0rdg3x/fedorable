@@ -6,3 +6,4 @@ net.davidotek.pupgui2
 com.usebottles.bottles
 com.mojang.Minecraft
 org.gnome.Aisleriot
+org.signal.Signal
