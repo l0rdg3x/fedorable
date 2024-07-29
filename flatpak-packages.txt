@@ -8,3 +8,4 @@ com.mojang.Minecraft
 org.gnome.Aisleriot
 org.signal.Signal
 org.upscayl.Upscayl
+com.jeffser.Alpaca
