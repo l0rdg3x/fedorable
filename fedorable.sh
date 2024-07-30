@@ -91,6 +91,7 @@ install_software() {
     echo "Installing Software"
     if [ -f dnf-packages.txt ]; then
         sudo dnf install -y $(cat dnf-packages.txt)
+        sudo dnf remove -y dragon
     else
         log_action "dnf-packages.txt not found"
     fi
