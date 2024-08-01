@@ -1,5 +1,4 @@
 com.bitwarden.desktop
-com.spotify.Client
 com.github.k4zmu2a.spacecadetpinball
 com.rafaelmardojai.Blanket
 net.davidotek.pupgui2
@@ -9,3 +8,4 @@ org.gnome.Aisleriot
 org.signal.Signal
 org.upscayl.Upscayl
 com.jeffser.Alpaca
+com.github.KRTirtho.Spotube
