@@ -191,11 +191,6 @@ install_snapshot_grub() {
     # Install inotify-tools
     sudo dnf install -y inotify-tools
 
-    # Edit grub-btrfsd systemd service
-    sudo mkdir -p /etc/systemd/system/grub-btrfsd.service.d/
-    echo -e "[Service]\nExecStart=/usr/bin/grub-btrfsd --syslog --timeshift-auto" | sudo tee /etc/systemd/system/grub-btrfsd.service.d/override.conf > /dev/null
-    sudo systemctl daemon-reload
-
     # Enable and start grub-btrfsd service
     sudo systemctl enable --now grub-btrfsd
 }
