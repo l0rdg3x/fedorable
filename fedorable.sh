@@ -6,7 +6,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
 # Dialog dimensions
 HEIGHT=20
 WIDTH=90
-CHOICE_HEIGHT=14
+CHOICE_HEIGHT=15
 
 # Titles and messages
 BACKTITLE="Fedorable - A Fedora Post Install Setup Util - By Smittix - https://lsass.co.uk"
@@ -44,7 +44,8 @@ OPTIONS=(
     11 "Install OpenRazer + Polychromatic (sudo gpasswd -a <yourUsername> plugdev)"
     12 "Install VSCode"
     13 "Install AnyDesk"
-    14 "Quit"
+    14 "Install Timeshift + Btrfs snapshot in Grub"
+    15 "Quit"
 )
 
 # Function to handle RPM Fusion setup
@@ -161,6 +162,41 @@ install_anydesk() {
     sudo dnf install -y anydesk
 }
 
+install_ts_grub() {
+    # Clone the grub-btrfs repository
+    git clone https://github.com/Antynea/grub-btrfs.git
+    cd grub-btrfs
+
+    # Edit the grub-btrfs configuration
+    sed -i 's/^#GRUB_BTRFS_SUBMENUNAME.*/GRUB_BTRFS_SUBMENUNAME="Fedora Linux snapshots"/' config
+    sed -i 's/^#GRUB_BTRFS_SNAPSHOT_KERNEL_PARAMETERS.*/GRUB_BTRFS_SNAPSHOT_KERNEL_PARAMETERS="rd.live.overlay.overlayfs=1"/' config
+    sed -i 's/^#GRUB_BTRFS_GRUB_DIRNAME.*/GRUB_BTRFS_GRUB_DIRNAME="\/boot\/grub2"/' config
+    sed -i 's/^#GRUB_BTRFS_BOOT_DIRNAME.*/GRUB_BTRFS_BOOT_DIRNAME="\/boot"/' config
+    sed -i 's/^#GRUB_BTRFS_MKCONFIG.*/GRUB_BTRFS_MKCONFIG=\/usr\/sbin\/grub2-mkconfig/' config
+    sed -i 's/^#GRUB_BTRFS_SCRIPT_CHECK.*/GRUB_BTRFS_SCRIPT_CHECK=grub2-script-check/' config
+
+    # Install grub-btrfs and update GRUB configuration
+    sudo make install
+    sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+    cd ..
+    sudo rm -rf grub-btrfs
+
+    # Edit /etc/fstab to optimize BTRFS mount options
+    sudo sed -i 's/subvol=root,compress=zstd:1/subvol=root,compress=zstd:1,defaults,noatime,discard=async/' /etc/fstab
+    sudo sed -i 's/subvol=home,compress=zstd:1/subvol=home,compress=zstd:1,defaults,noatime,discard=async/' /etc/fstab
+
+    # Install inotify-tools and timeshift
+    sudo dnf install -y inotify-tools timeshift
+
+    # Edit grub-btrfsd systemd service
+    sudo mkdir -p /etc/systemd/system/grub-btrfsd.service.d/
+    echo -e "[Service]\nExecStart=/usr/bin/grub-btrfsd --syslog --timeshift-auto" | sudo tee /etc/systemd/system/grub-btrfsd.service.d/override.conf > /dev/null
+    sudo systemctl daemon-reload
+
+    # Enable and start grub-btrfsd service
+    sudo systemctl enable --now grub-btrfsd
+}
+
 # Main loop
 while true; do
     CHOICE=$(dialog --clear \
@@ -187,7 +223,8 @@ while true; do
         11) install_openrazer ;;
         12) install_vscode ;;
         13) install_anydesk ;;
-        14) log_action "User chose to quit the script."; exit 0 ;;
+        14) install_ts_grub ;;
+        15) log_action "User chose to quit the script."; exit 0 ;;
         *) log_action "Invalid option selected: $CHOICE";;
     esac
 done
