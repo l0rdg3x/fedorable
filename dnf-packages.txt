@@ -7,7 +7,6 @@ nmap
 gimp
 libreoffice
 qbittorrent
-btrfs-assistant
 steam
 nextcloud-client
 nextcloud-client-dolphin
