@@ -44,7 +44,7 @@ OPTIONS=(
     11 "Install OpenRazer + Polychromatic (sudo gpasswd -a <yourUsername> plugdev)"
     12 "Install VSCode"
     13 "Install AnyDesk"
-    14 "Install Timeshift + Btrfs snapshot in Grub"
+    14 "Btrfs snapshot in Grub + dnf plugin snapper"
     15 "Quit"
 )
 
@@ -162,9 +162,9 @@ install_anydesk() {
     sudo dnf install -y anydesk
 }
 
-install_ts_grub() {
-    # Install make
-    sudo dnf install -y make
+install_snapshot_grub() {
+    # Install make and snapper dnf plugin
+    sudo dnf install -y make python3-dnf-plugin-snapper
 
     # Clone the grub-btrfs repository
     git clone https://github.com/Antynea/grub-btrfs.git
@@ -188,8 +188,8 @@ install_ts_grub() {
     sudo sed -i 's/subvol=root,compress=zstd:1/subvol=root,compress=zstd:1,defaults,noatime,discard=async/' /etc/fstab
     sudo sed -i 's/subvol=home,compress=zstd:1/subvol=home,compress=zstd:1,defaults,noatime,discard=async/' /etc/fstab
 
-    # Install inotify-tools and timeshift
-    sudo dnf install -y inotify-tools timeshift
+    # Install inotify-tools
+    sudo dnf install -y inotify-tools
 
     # Edit grub-btrfsd systemd service
     sudo mkdir -p /etc/systemd/system/grub-btrfsd.service.d/
@@ -226,7 +226,7 @@ while true; do
         11) install_openrazer ;;
         12) install_vscode ;;
         13) install_anydesk ;;
-        14) install_ts_grub ;;
+        14) install_snapshot_grub ;;
         15) log_action "User chose to quit the script."; exit 0 ;;
         *) log_action "Invalid option selected: $CHOICE";;
     esac
