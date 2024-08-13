@@ -163,6 +163,9 @@ install_anydesk() {
 }
 
 install_ts_grub() {
+    # Install make
+    sudo dnf install -y make
+
     # Clone the grub-btrfs repository
     git clone https://github.com/Antynea/grub-btrfs.git
     cd grub-btrfs
