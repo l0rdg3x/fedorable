@@ -180,7 +180,6 @@ install_snapshot_grub() {
 
     # Install grub-btrfs and update GRUB configuration
     sudo make install
-    echo 'GRUB_TIMEOUT_STYLE=menu' | sudo tee -a /etc/default/grub
     sudo grub2-mkconfig -o /boot/grub2/grub.cfg
     cd ..
     sudo rm -rf grub-btrfs
