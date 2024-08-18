@@ -41,7 +41,7 @@ OPTIONS=(
     8 "Install Nvidia - Install akmod Nvidia drivers"
     9 "Enable Virtualization - KVM/QEMU  + VirtManager"
     10 "Enable TLP"
-    11 "Install OpenRazer + Polychromatic (sudo gpasswd -a <yourUsername> plugdev)"
+    11 "Install OpenRazer + Polychromatic"
     12 "Install VSCode"
     13 "Install AnyDesk"
     14 "Btrfs snapshot in Grub + dnf plugin snapper"
@@ -147,6 +147,7 @@ install_openrazer() {
     sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/hardware:/razer/Fedora_$(rpm -E %fedora)/hardware:razer.repo
     sudo dnf install -y openrazer-meta
     sudo dnf install -y polychromatic
+    sudo gpasswd -a $(whoami) plugdev
 }
 
 install_vscode() {
