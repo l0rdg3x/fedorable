@@ -9,3 +9,4 @@ org.signal.Signal
 org.upscayl.Upscayl
 com.jeffser.Alpaca
 com.github.KRTirtho.Spotube
+io.podman_desktop.PodmanDesktop
