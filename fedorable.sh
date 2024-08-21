@@ -45,7 +45,8 @@ OPTIONS=(
     12 "Install VSCode"
     13 "Install AnyDesk"
     14 "Btrfs snapshot in Grub + dnf plugin snapper"
-    15 "Quit"
+    15 "Install Docker"
+    16 "Quit"
 )
 
 # Function to handle RPM Fusion setup
@@ -196,6 +197,13 @@ install_snapshot_grub() {
     sudo systemctl enable --now grub-btrfsd
 }
 
+install_docker() {
+    sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+    sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    sudo usermod -aG docker $(whoami)
+    sudo systemctl enable --now docker
+}
+
 # Main loop
 while true; do
     CHOICE=$(dialog --clear \
@@ -223,7 +231,8 @@ while true; do
         12) install_vscode ;;
         13) install_anydesk ;;
         14) install_snapshot_grub ;;
-        15) log_action "User chose to quit the script."; exit 0 ;;
+        15) install_docker ;;
+        16) log_action "User chose to quit the script."; exit 0 ;;
         *) log_action "Invalid option selected: $CHOICE";;
     esac
 done
