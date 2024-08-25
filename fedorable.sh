@@ -91,6 +91,7 @@ enable_flatpak() {
 # Function to install software
 install_software() {
     echo "Installing Software"
+    sudo dnf config-manager --set-enabled google-chrome
     if [ -f dnf-packages.txt ]; then
         sudo dnf install -y $(cat dnf-packages.txt)
         sudo dnf remove -y dragon
