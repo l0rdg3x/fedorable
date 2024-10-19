@@ -56,8 +56,8 @@ enable_rpm_fusion() {
         https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
         https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
     sudo dnf upgrade --refresh -y
-    sudo dnf groupupdate -y core
-    sudo dnf install -y rpmfusion-free-release-tainted dnf-plugins-core
+    sudo dnf group update -y core
+    sudo dnf install -y rpmfusion-free-release-tainted rpmfusion-nonfree-release-tainted dnf-plugins-core
 }
 
 # Function to update firmware
