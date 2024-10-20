@@ -24,3 +24,4 @@ wireshark
 vorta
 btrfs-assistant
 brave-browser
+selinux-policy-devel
