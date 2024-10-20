@@ -91,7 +91,10 @@ enable_flatpak() {
 # Function to install software
 install_software() {
     echo "Installing Software"
-    sudo dnf config-manager --set-enabled google-chrome
+    
+    sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+    sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
+
     if [ -f dnf-packages.txt ]; then
         sudo dnf install -y $(cat dnf-packages.txt)
         sudo dnf remove -y dragon
