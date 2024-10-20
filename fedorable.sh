@@ -43,7 +43,7 @@ OPTIONS=(
     10 "Enable TLP"
     11 "Install OpenRazer + Polychromatic"
     12 "Install VSCode"
-    13 "Install AnyDesk"
+    13 "Install RustDesk"
     14 "Btrfs snapshot in Grub + dnf plugin snapper"
     15 "Install Docker"
     16 "Quit"
@@ -161,11 +161,11 @@ install_vscode() {
     sudo dnf install -y code
 }
 
-install_anydesk() {
-    sudo rpm --import https://keys.anydesk.com/repos/RPM-GPG-KEY
-    echo -e "[anydesk]\nname=AnyDesk Fedora - stable\nbaseurl=http://rpm.anydesk.com/fedora/\$basearch/\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://keys.anydesk.com/repos/RPM-GPG-KEY" | sudo tee /etc/yum.repos.d/AnyDesk-Fedora.repo > /dev/null
-    sudo dnf install -y https://rpmfind.net/linux/opensuse/tumbleweed/repo/oss/x86_64/libgtkglext-x11-1_0-0-1.2.0git20110529-8.6.x86_64.rpm
-    sudo dnf install -y anydesk
+install_rustdesk() {
+    rustdesk_latest_release=$(curl --silent "https://api.github.com/repos/rustdesk/rustdesk/releases/latest")
+    rustdesk_download_url=$(echo "$rustdesk_latest_release" | grep -Eo 'https://[^\"]+x86_64\.rpm' | uniq)
+    sudo dnf install -y $rustdesk_download_url
+    sudo systemctl enable --now rustdesk
 }
 
 install_snapshot_grub() {
@@ -235,7 +235,7 @@ while true; do
         10) enable_tlp ;;
         11) install_openrazer ;;
         12) install_vscode ;;
-        13) install_anydesk ;;
+        13) install_rustdesk ;;
         14) install_snapshot_grub ;;
         15) install_docker ;;
         16) log_action "User chose to quit the script."; exit 0 ;;
